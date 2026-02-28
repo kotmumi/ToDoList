@@ -18,6 +18,21 @@ final class ListView: UIView {
         return label
     }()
     
+    private let searchTextField: UISearchTextField = {
+        let searchTextField = UISearchTextField()
+        searchTextField.translatesAutoresizingMaskIntoConstraints = false
+        return searchTextField
+    }()
+    
+    private let listTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = AppColor.backgroundPrimary
+        return tableView
+    }()
+    
+    private let tabBar = TabBarView()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -31,12 +46,37 @@ final class ListView: UIView {
 
 extension ListView {
     private func setupUI() {
-        
+        backgroundColor = AppColor.backgroundPrimary
+        addSubview(titleLabel)
+        addSubview(searchTextField)
+        addSubview(listTableView)
+        addSubview(tabBar)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Spacing.extraSmall),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Spacing.medium),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Spacing.medium),
             
+            searchTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Spacing.small),
+            searchTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Spacing.medium),
+            searchTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Spacing.medium),
+            searchTextField.heightAnchor.constraint(equalToConstant: Size.primaryViewHeight),
+            
+            listTableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: Spacing.medium),
+            listTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            listTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            listTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            
+            tabBar.bottomAnchor.constraint(equalTo: bottomAnchor),
+            tabBar.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tabBar.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tabBar.heightAnchor.constraint(equalToConstant: Size.tabBarHeight),
         ])
+    }
+    
+    func config(countTask: Int) {
+        tabBar.config(countTasks: countTask)
     }
 }

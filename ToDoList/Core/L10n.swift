@@ -9,4 +9,5 @@ import Foundation
 
 enum L10n {
     static var title: String { String(localized: "title") }
+    static var countTasks: String { String(localized: "countTasks")}
 }

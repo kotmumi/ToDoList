@@ -8,7 +8,8 @@
 import UIKit
 
 enum AppColor {
-    static let accent = UIColor(named: "accentColor")
-    static let textPirimary = UIColor(named: "textPrimary")
-    static let backgroundPrimary = UIColor(named: "backgroundPrimary")
+    static let accent = UIColor(named: "AccentColor")
+    static let textPirimary = UIColor(named: "PrimaryText")
+    static let backgroundPrimary = UIColor(named: "PrimaryBackground")
+    static let backgroundSecondary = UIColor(named: "SecondaryBackground")
 }

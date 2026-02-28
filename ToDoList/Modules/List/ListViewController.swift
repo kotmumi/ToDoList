@@ -8,10 +8,16 @@
 import UIKit
 
 class ListViewController: UIViewController {
+    
+    private let listView = ListView()
+    
+    override func loadView() {
+        super.loadView()
+        view = listView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
     }
 
 
