@@ -21,10 +21,11 @@ final class ListView: UIView {
     private let searchTextField: UISearchTextField = {
         let searchTextField = UISearchTextField()
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
+        searchTextField.placeholder = ""
         return searchTextField
     }()
     
-    private let listTableView: UITableView = {
+    let listTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = AppColor.backgroundPrimary
@@ -64,7 +65,7 @@ extension ListView {
             searchTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Spacing.medium),
             searchTextField.heightAnchor.constraint(equalToConstant: Size.primaryViewHeight),
             
-            listTableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: Spacing.medium),
+            listTableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: Spacing.large),
             listTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             listTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             listTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
