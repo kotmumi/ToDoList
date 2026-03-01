@@ -108,7 +108,9 @@ extension ListTableViewCell {
         descriptionLabel.text = "\(todoItem.taskDescription)"
         dateLabel.text = todoItem.createdAt.formatted(date: .numeric, time: .shortened).description
         if todoItem.isCompleted {
-            completedButton.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+            completedButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            completedButton.layer.borderColor = AppColor.accent?.cgColor
+            completedButton.tintColor = AppColor.accent
         }
     }
 }

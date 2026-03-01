@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 
 final class ListPresenter {
     weak var view: ListViewType?
@@ -17,7 +18,7 @@ final class ListPresenter {
     private let errorSubject = PassthroughSubject<String, Never>()
     var errorPublisher: AnyPublisher<String, Never> { errorSubject.eraseToAnyPublisher() }
     
-    init(view: ListViewType?, interactor: ListDataProviding, router: ListRouting) {
+    init(view: ListViewType? = nil, interactor: ListDataProviding, router: ListRouting) {
            self.view = view
            self.interactor = interactor
            self.router = router
@@ -37,14 +38,23 @@ extension ListPresenter: ListPresenting {
     }
     
     func viewDidLoad() {
-        
+        interactor.fetchTasks { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let tasks):
+                    self?.tasksSubject.send(tasks)
+                case .failure(let error):
+                    self?.errorSubject.send(error.localizedDescription)
+                }
+            }
+        }
     }
     
     func didSelectTask(_ task: TodoItem) {
-        
+        router.openTaskDetail(task)
     }
     
     func didTapAdd() {
-        
+        router.openAddTask()
     }
 }

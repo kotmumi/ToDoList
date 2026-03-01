@@ -6,15 +6,16 @@
 //
 
 import UIKit
+import CoreData
 
 final class ListBuilder {
-    func build() -> UIViewController {
-        
-       // let interactor = ListInteractor(repository: repository)
+    func build(container: NSPersistentContainer) -> UIViewController {
+        let repository = CoreDataTaskRepository(container: container)
+        let apiService = DummyJSONService()
+        let interactor = ListInteractor(repository: repository, apiService: apiService)
         let router = ListRouter()
         let presenter = ListPresenter(interactor: interactor, router: router)
         let viewController = ListViewController(presenter: presenter)
-       // viewController.presenter = presenter
         router.viewController = viewController
         presenter.view = viewController
         

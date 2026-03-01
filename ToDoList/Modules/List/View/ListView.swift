@@ -33,7 +33,12 @@ final class ListView: UIView {
     }()
     
     private let tabBar = TabBarView()
-    
+
+    var onAddTaskTapped: (() -> Void)? {
+        get { tabBar.onAddTapped }
+        set { tabBar.onAddTapped = newValue }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
