@@ -14,7 +14,7 @@ final class ListTableViewCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = AppColor.textPirimary
+        label.textColor = AppColor.textPrimary
         label.font = .systemFont(ofSize: FontSize.body, weight: .medium)
         return label
     }()
@@ -22,7 +22,7 @@ final class ListTableViewCell: UITableViewCell {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = AppColor.textPirimary
+        label.textColor = AppColor.textPrimary
         label.font = .systemFont(ofSize: FontSize.caption, weight: .regular)
         label.numberOfLines = 0
         return label

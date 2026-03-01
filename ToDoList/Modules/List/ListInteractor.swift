@@ -41,23 +41,19 @@ final class ListInteractor: ListDataProviding {
         }
     }
 
+    func searchTasks(query: String, completion: @escaping (Result<[TodoItem], Error>) -> Void) {
+        repository.search(query: query, completion: completion)
+    }
+
     private func saveFetchedTasks(_ items: [TodoItem], completion: @escaping (Result<[TodoItem], Error>) -> Void) {
-        let group = DispatchGroup()
-        var saveError: Error?
-        for item in items {
-            group.enter()
-            repository.add(item) { result in
-                if case .failure(let error) = result { saveError = error }
-                group.leave()
-            }
-        }
-        group.notify(queue: .main) { [weak self] in
-            if let error = saveError {
+        repository.addAll(items) { [weak self] result in
+            switch result {
+            case .success:
+                FirstLaunch.hasLoadedFromAPI = true
+                self?.repository.fetchAll(completion: completion)
+            case .failure(let error):
                 completion(.failure(error))
-                return
             }
-            FirstLaunch.hasLoadedFromAPI = true
-            self?.repository.fetchAll(completion: completion)
         }
     }
 }

@@ -19,10 +19,12 @@ protocol ListPresenting: AnyObject {
     func viewDidLoad()
     func didSelectTask(_ task: TodoItem)
     func didTapAdd()
+    func didChangeSearchQuery(_ query: String)
 }
 
 protocol ListDataProviding: AnyObject {
     func fetchTasks(completion: @escaping (Result<[TodoItem], Error>) -> Void)
+    func searchTasks(query: String, completion: @escaping (Result<[TodoItem], Error>) -> Void)
 }
 
 protocol ListRouting: AnyObject {

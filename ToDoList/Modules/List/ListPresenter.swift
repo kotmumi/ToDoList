@@ -57,4 +57,31 @@ extension ListPresenter: ListPresenting {
     func didTapAdd() {
         router.openAddTask()
     }
+
+    func didChangeSearchQuery(_ query: String) {
+        let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty {
+            interactor.fetchTasks { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let tasks):
+                        self?.tasksSubject.send(tasks)
+                    case .failure(let error):
+                        self?.errorSubject.send(error.localizedDescription)
+                    }
+                }
+            }
+        } else {
+            interactor.searchTasks(query: trimmed) { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let tasks):
+                        self?.tasksSubject.send(tasks)
+                    case .failure(let error):
+                        self?.errorSubject.send(error.localizedDescription)
+                    }
+                }
+            }
+        }
+    }
 }

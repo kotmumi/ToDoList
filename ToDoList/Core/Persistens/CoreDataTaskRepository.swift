@@ -52,6 +52,25 @@ final class CoreDataTaskRepository: TaskRepository {
         }
     }
 
+    func addAll(_ tasks: [TodoItem], completion: @escaping (Result<Void, Error>) -> Void) {
+        let container = self.container
+        queue.async {
+            let context = container.newBackgroundContext()
+            context.perform {
+                do {
+                    for item in tasks {
+                        let obj = TodoTask(context: context)
+                        Self.mapFromItem(item, to: obj)
+                    }
+                    try context.save()
+                    DispatchQueue.main.async { completion(.success(())) }
+                } catch {
+                    DispatchQueue.main.async { completion(.failure(error)) }
+                }
+            }
+        }
+    }
+
     func update(_ task: TodoItem, completion: @escaping (Result<Void, Error>) -> Void) {
         let container = self.container
         let taskId = task.id

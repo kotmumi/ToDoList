@@ -14,7 +14,7 @@ final class TabBarView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: FontSize.caption, weight: .regular)
-        label.textColor = AppColor.textPirimary
+        label.textColor = AppColor.textPrimary
         label.text = L10n.countTasks
         return label
     }()

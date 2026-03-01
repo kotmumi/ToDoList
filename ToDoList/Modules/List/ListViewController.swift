@@ -47,6 +47,9 @@ extension ListViewController {
         listView.onAddTaskTapped = { [weak self] in
             self?.presenter.didTapAdd()
         }
+        listView.onSearchQueryChanged = { [weak self] query in
+            self?.presenter.didChangeSearchQuery(query)
+        }
     }
 
     private func setupBindings() {

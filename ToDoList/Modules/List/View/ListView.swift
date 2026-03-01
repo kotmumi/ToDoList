@@ -39,10 +39,13 @@ final class ListView: UIView {
         set { tabBar.onAddTapped = newValue }
     }
 
+    var onSearchQueryChanged: ((String) -> Void)?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
         setupConstraints()
+        setupSearch()
     }
     
     required init?(coder: NSCoder) {
@@ -84,5 +87,13 @@ extension ListView {
     
     func config(countTask: Int) {
         tabBar.config(countTasks: countTask)
+    }
+
+    private func setupSearch() {
+        searchTextField.addTarget(self, action: #selector(searchTextDidChange), for: .editingChanged)
+    }
+
+    @objc private func searchTextDidChange() {
+        onSearchQueryChanged?(searchTextField.text ?? "")
     }
 }
