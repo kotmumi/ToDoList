@@ -28,7 +28,9 @@ final class TabBarView: UIView {
         button.tintColor = AppColor.accent
         return button
     }()
-    
+
+    var onAddTapped: (() -> Void)?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -47,6 +49,11 @@ extension TabBarView {
         backgroundColor = AppColor.backgroundSecondary
         addSubview(countTasksLabel)
         addSubview(addTaskButton)
+        addTaskButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+    }
+
+    @objc private func addButtonTapped() {
+        onAddTapped?()
     }
     
     private func setupConstraints() {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,8 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: scene)
         self.window = window
-        let vc = ListViewController()
-        self.window?.rootViewController = vc
+        //let vc = ListViewController()
+        let container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer ?? NSPersistentContainer(name: "ToDoList")
+        self.window?.rootViewController = ListBuilder().build(container: container)
         self.window?.makeKeyAndVisible()
     }
 
