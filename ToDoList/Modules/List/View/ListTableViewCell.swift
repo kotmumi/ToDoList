@@ -9,7 +9,7 @@ import UIKit
 
 final class ListTableViewCell: UITableViewCell {
     
-    static let identifier: String = "ListTableViewCell"
+    static let identifier: String = String(describing: ListTableViewCell.self) 
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -93,8 +93,8 @@ extension ListTableViewCell {
             
             completedButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             completedButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Spacing.medium),
-            completedButton.heightAnchor.constraint(equalToConstant: Size.primaryViewHeight * 0.8),
-            completedButton.widthAnchor.constraint(equalToConstant: Size.primaryViewHeight * 0.8),
+            completedButton.heightAnchor.constraint(equalToConstant: Size.checkmarkButtonSize),
+            completedButton.widthAnchor.constraint(equalToConstant: Size.checkmarkButtonSize),
             
             separator.bottomAnchor.constraint(equalTo: bottomAnchor),
             separator.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Spacing.medium),
@@ -103,9 +103,12 @@ extension ListTableViewCell {
         ])
     }
     
-    func config() {
-        titleLabel.text = "Title"
-        descriptionLabel.text = "description"
-        dateLabel.text = Date().formatted(date: .numeric, time: .shortened).description
+    func config(todoItem: TodoItem) {
+        titleLabel.text = "\(todoItem.title)"
+        descriptionLabel.text = "\(todoItem.taskDescription)"
+        dateLabel.text = todoItem.createdAt.formatted(date: .numeric, time: .shortened).description
+        if todoItem.isCompleted {
+            completedButton.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        }
     }
 }

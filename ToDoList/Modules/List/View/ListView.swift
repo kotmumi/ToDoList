@@ -21,7 +21,7 @@ final class ListView: UIView {
     private let searchTextField: UISearchTextField = {
         let searchTextField = UISearchTextField()
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
-        searchTextField.placeholder = ""
+        searchTextField.placeholder = L10n.searchPlaceholder
         return searchTextField
     }()
     

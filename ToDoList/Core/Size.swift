@@ -10,6 +10,7 @@ enum Size {
     
     static let tabBarHeight: CGFloat = 80
     static let primaryViewHeight: CGFloat = 40
+    static let checkmarkButtonSize: CGFloat = 32
     static let imageSize: CGFloat = 24
     
     static let cornerRadiusSmall: CGFloat = 8
