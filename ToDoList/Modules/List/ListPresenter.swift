@@ -84,4 +84,24 @@ extension ListPresenter: ListPresenting {
             }
         }
     }
+
+    func didTapComplete(_ task: TodoItem) {
+        var updated = task
+        updated.isCompleted.toggle()
+        interactor.updateTask(updated) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    guard let self = self else { return }
+                    var tasks = self.tasksSubject.value
+                    if let index = tasks.firstIndex(where: { $0.id == updated.id }) {
+                        tasks[index] = updated
+                        self.tasksSubject.send(tasks)
+                    }
+                case .failure(let error):
+                    self?.errorSubject.send(error.localizedDescription)
+                }
+            }
+        }
+    }
 }

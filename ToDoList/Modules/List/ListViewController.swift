@@ -47,12 +47,25 @@ extension ListViewController {
         listView.onAddTaskTapped = { [weak self] in
             self?.presenter.didTapAdd()
         }
-        listView.onSearchQueryChanged = { [weak self] query in
-            self?.presenter.didChangeSearchQuery(query)
-        }
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     private func setupBindings() {
+        listView.searchQueryPublisher
+            .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] query in
+                self?.presenter.didChangeSearchQuery(query)
+            }
+            .store(in: &cancellables)
+
         presenter.tasksPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] tasks in
@@ -67,12 +80,6 @@ extension ListViewController {
                 self?.showError(message: message)
             }
             .store(in: &cancellables)
-    }
-
-    private func showError(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
     }
 }
 
@@ -98,12 +105,22 @@ extension ListViewController: UITableViewDataSource {
         guard let todoItem = presenter.task(at: indexPath.row) else {
             return cell
         }
-        
         cell.config(todoItem: todoItem)
+        cell.onCompleteTapped = { [weak self] task in
+            self?.presenter.didTapComplete(task)
+        }
         return cell
     }
 }
 
 extension ListViewController: ListViewType {
-    
+    func showError(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
+    func setSearchQuery(_ query: String) {
+        listView.setSearchQuery(query)
+    }
 }

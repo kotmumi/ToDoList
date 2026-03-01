@@ -8,7 +8,8 @@
 import Combine
 
 protocol ListViewType: AnyObject {
-
+    func showError(message: String)
+    func setSearchQuery(_ query: String)
 }
 
 protocol ListPresenting: AnyObject {
@@ -20,11 +21,13 @@ protocol ListPresenting: AnyObject {
     func didSelectTask(_ task: TodoItem)
     func didTapAdd()
     func didChangeSearchQuery(_ query: String)
+    func didTapComplete(_ task: TodoItem)
 }
 
 protocol ListDataProviding: AnyObject {
     func fetchTasks(completion: @escaping (Result<[TodoItem], Error>) -> Void)
     func searchTasks(query: String, completion: @escaping (Result<[TodoItem], Error>) -> Void)
+    func updateTask(_ task: TodoItem, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 protocol ListRouting: AnyObject {

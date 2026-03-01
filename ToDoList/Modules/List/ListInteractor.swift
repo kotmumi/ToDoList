@@ -45,6 +45,10 @@ final class ListInteractor: ListDataProviding {
         repository.search(query: query, completion: completion)
     }
 
+    func updateTask(_ task: TodoItem, completion: @escaping (Result<Void, Error>) -> Void) {
+        repository.update(task, completion: completion)
+    }
+
     private func saveFetchedTasks(_ items: [TodoItem], completion: @escaping (Result<[TodoItem], Error>) -> Void) {
         repository.addAll(items) { [weak self] result in
             switch result {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class ListView: UIView {
     
@@ -14,7 +15,7 @@ final class ListView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = L10n.title
         label.font = .systemFont(ofSize: FontSize.largeTitle, weight: .bold)
-        label.textColor = AppColor.textPirimary
+        label.textColor = AppColor.textPrimary
         return label
     }()
     
@@ -39,7 +40,10 @@ final class ListView: UIView {
         set { tabBar.onAddTapped = newValue }
     }
 
-    var onSearchQueryChanged: ((String) -> Void)?
+    private let searchQuerySubject = PassthroughSubject<String, Never>()
+    var searchQueryPublisher: AnyPublisher<String, Never> {
+        searchQuerySubject.eraseToAnyPublisher()
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -89,11 +93,24 @@ extension ListView {
         tabBar.config(countTasks: countTask)
     }
 
+    func setSearchQuery(_ text: String) {
+        searchTextField.text = text
+    }
+
     private func setupSearch() {
+        searchTextField.returnKeyType = .done
+        searchTextField.delegate = self
         searchTextField.addTarget(self, action: #selector(searchTextDidChange), for: .editingChanged)
     }
 
     @objc private func searchTextDidChange() {
-        onSearchQueryChanged?(searchTextField.text ?? "")
+        searchQuerySubject.send(searchTextField.text ?? "")
+    }
+}
+
+extension ListView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
