@@ -16,12 +16,12 @@ final class ListRouter: ListRouting {
     func openAddTask() {
         guard let from = viewController as? UIViewController,
               let addEditVC = buildAddEdit?(nil) else { return }
-        from.present(addEditVC, animated: true)
+        from.navigationController?.pushViewController(addEditVC, animated: true)
     }
 
     func openTaskDetail(_ task: TodoItem) {
         guard let from = viewController as? UIViewController,
               let addEditVC = buildAddEdit?(task) else { return }
-        from.present(addEditVC, animated: true)
+        from.navigationController?.pushViewController(addEditVC, animated: true)
     }
 }

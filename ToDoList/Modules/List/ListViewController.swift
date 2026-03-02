@@ -93,6 +93,33 @@ extension ListViewController: UITableViewDelegate {
         guard let task = presenter.task(at: indexPath.row) else { return }
         presenter.didSelectTask(task)
     }
+
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let task = presenter.task(at: indexPath.row) else { return nil }
+        return UIContextMenuConfiguration(identifier: task.id as NSString, previewProvider: nil) { [weak self] _ in
+            guard let self = self else { return nil }
+            let editAction = UIAction(
+                title: L10n.edit,
+                image: UIImage(systemName: "pencil")
+            ) { _ in
+                self.presenter.didSelectTask(task)
+            }
+            let shareAction = UIAction(
+                title: L10n.share,
+                image: UIImage(systemName: "square.and.arrow.up")
+            ) { _ in
+                self.presenter.didRequestShare(task)
+            }
+            let deleteAction = UIAction(
+                title: L10n.delete,
+                image: UIImage(systemName: "trash"),
+                attributes: .destructive
+            ) { _ in
+                self.presenter.didRequestDelete(task)
+            }
+            return UIMenu(title: "", children: [editAction, shareAction, deleteAction])
+        }
+    }
 }
 
 extension ListViewController: UITableViewDataSource {
@@ -126,5 +153,11 @@ extension ListViewController: ListViewType {
 
     func setSearchQuery(_ query: String) {
         listView.setSearchQuery(query)
+    }
+
+    func showShareSheet(for task: TodoItem) {
+        let text = [task.title, task.taskDescription].filter { !$0.isEmpty }.joined(separator: "\n\n")
+        let activityVC = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+        present(activityVC, animated: true)
     }
 }

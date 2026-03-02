@@ -21,6 +21,7 @@ final class ListBuilder {
         router.buildAddEdit = { task in
             AddEditBuilder().build(container: container, task: task)
         }
-        return viewController
+        let navigationController = UINavigationController(rootViewController: viewController)
+        return navigationController
     }
 }

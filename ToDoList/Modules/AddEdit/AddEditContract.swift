@@ -17,8 +17,7 @@ protocol AddEditViewType: AnyObject {
 protocol AddEditPresenting: AnyObject {
     var isEditMode: Bool { get }
     func viewDidLoad()
-    func didTapSave(title: String, description: String)
-    func didTapCancel()
+    func didTapBack(title: String, description: String)
 }
 
 protocol AddEditDataProviding: AnyObject {
@@ -27,6 +26,5 @@ protocol AddEditDataProviding: AnyObject {
 }
 
 protocol AddEditRouting: AnyObject {
-    func dismiss()
-    func dismissAfterSave()
+    func pop()
 }

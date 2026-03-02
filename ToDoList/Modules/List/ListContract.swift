@@ -10,6 +10,7 @@ import Combine
 protocol ListViewType: AnyObject {
     func showError(message: String)
     func setSearchQuery(_ query: String)
+    func showShareSheet(for task: TodoItem)
 }
 
 protocol ListPresenting: AnyObject {
@@ -22,12 +23,15 @@ protocol ListPresenting: AnyObject {
     func didTapAdd()
     func didChangeSearchQuery(_ query: String)
     func didTapComplete(_ task: TodoItem)
+    func didRequestDelete(_ task: TodoItem)
+    func didRequestShare(_ task: TodoItem)
 }
 
 protocol ListDataProviding: AnyObject {
     func fetchTasks(completion: @escaping (Result<[TodoItem], Error>) -> Void)
     func searchTasks(query: String, completion: @escaping (Result<[TodoItem], Error>) -> Void)
     func updateTask(_ task: TodoItem, completion: @escaping (Result<Void, Error>) -> Void)
+    func deleteTask(id: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 protocol ListRouting: AnyObject {

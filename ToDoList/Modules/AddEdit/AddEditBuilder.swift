@@ -18,8 +18,6 @@ final class AddEditBuilder {
         let viewController = AddEditViewController(presenter: presenter)
         router.viewController = viewController
         presenter.view = viewController
-        viewController.modalPresentationStyle = .pageSheet
-        let navigationController = UINavigationController(rootViewController: viewController)
-        return navigationController
+        return viewController
     }
 }

@@ -104,4 +104,24 @@ extension ListPresenter: ListPresenting {
             }
         }
     }
+
+    func didRequestDelete(_ task: TodoItem) {
+        interactor.deleteTask(id: task.id) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    guard let self = self else { return }
+                    var tasks = self.tasksSubject.value
+                    tasks.removeAll { $0.id == task.id }
+                    self.tasksSubject.send(tasks)
+                case .failure(let error):
+                    self?.errorSubject.send(error.localizedDescription)
+                }
+            }
+        }
+    }
+
+    func didRequestShare(_ task: TodoItem) {
+        view?.showShareSheet(for: task)
+    }
 }

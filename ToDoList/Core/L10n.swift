@@ -16,4 +16,8 @@ enum L10n {
     static var save: String { String(localized: "save") }
     static var cancel: String { String(localized: "cancel") }
     static var titleRequired: String { String(localized: "titleRequired") }
+    static var back: String { String(localized: "back") }
+    static var edit: String { String(localized: "edit") }
+    static var share: String { String(localized: "share") }
+    static var delete: String { String(localized: "delete") }
 }

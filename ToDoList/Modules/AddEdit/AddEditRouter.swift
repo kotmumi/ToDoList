@@ -11,11 +11,7 @@ final class AddEditRouter: AddEditRouting {
 
     weak var viewController: UIViewController?
 
-    func dismiss() {
-        viewController?.dismiss(animated: true)
-    }
-
-    func dismissAfterSave() {
-        viewController?.dismiss(animated: true)
+    func pop() {
+        viewController?.navigationController?.popViewController(animated: true)
     }
 }

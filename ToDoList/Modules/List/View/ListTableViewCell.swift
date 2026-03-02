@@ -74,6 +74,14 @@ final class ListTableViewCell: UITableViewCell {
         resetAppearance()
     }
 
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let pointInButton = convert(point, to: completedButton)
+        if completedButton.bounds.contains(pointInButton) {
+            return completedButton
+        }
+        return super.hitTest(point, with: event)
+    }
+
     private func resetAppearance() {
         currentTodoItem = nil
         onCompleteTapped = nil
@@ -137,8 +145,8 @@ extension ListTableViewCell {
         let textColor = todoItem.isCompleted ? (AppColor.textSecondary ?? .gray) : (AppColor.textPrimary ?? .label)
         descriptionLabel.text = todoItem.taskDescription
         descriptionLabel.textColor = textColor
-        dateLabel.text = todoItem.createdAt.formatted(date: .numeric, time: .shortened).description
-        dateLabel.textColor = textColor
+        dateLabel.text = todoItem.createdAt.formatted(date: .numeric, time: .omitted)
+        dateLabel.textColor = AppColor.textSecondary ?? .secondaryLabel
 
         if todoItem.isCompleted {
             titleLabel.attributedText = NSAttributedString(

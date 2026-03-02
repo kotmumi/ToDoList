@@ -29,15 +29,15 @@ extension AddEditPresenter: AddEditPresenting {
         if let task = task {
             view?.setTitle(task.title)
             view?.setDescription(task.taskDescription)
-            view?.setDate(task.createdAt.formatted(date: .numeric, time: .shortened).description)
+            view?.setDate(task.createdAt.formatted(date: .numeric, time: .omitted))
         } else {
             view?.setTitle("")
             view?.setDescription("")
-            view?.setDate(Date().formatted(date: .numeric, time: .shortened).description)
+            view?.setDate(Date().formatted(date: .numeric, time: .omitted))
         }
     }
 
-    func didTapSave(title: String, description: String) {
+    func didTapBack(title: String, description: String) {
         let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedTitle.isEmpty else {
             view?.showError(message: L10n.titleRequired)
@@ -51,7 +51,7 @@ extension AddEditPresenter: AddEditPresenting {
                 DispatchQueue.main.async {
                     switch result {
                     case .success:
-                        self?.router.dismissAfterSave()
+                        self?.router.pop()
                     case .failure(let error):
                         self?.view?.showError(message: error.localizedDescription)
                     }
@@ -69,16 +69,12 @@ extension AddEditPresenter: AddEditPresenting {
                 DispatchQueue.main.async {
                     switch result {
                     case .success:
-                        self?.router.dismissAfterSave()
+                        self?.router.pop()
                     case .failure(let error):
                         self?.view?.showError(message: error.localizedDescription)
                     }
                 }
             }
         }
-    }
-
-    func didTapCancel() {
-        router.dismiss()
     }
 }

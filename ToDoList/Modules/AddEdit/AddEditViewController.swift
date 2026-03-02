@@ -36,26 +36,20 @@ final class AddEditViewController: UIViewController {
 extension AddEditViewController {
 
     private func setupNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: L10n.cancel,
-            style: .plain,
-            target: self,
-            action: #selector(cancelTapped)
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: L10n.save,
-            style: .done,
-            target: self,
-            action: #selector(saveTapped)
-        )
+        navigationItem.hidesBackButton = true
+        var config = UIButton.Configuration.plain()
+        config.image = UIImage(systemName: "chevron.left")
+        config.title = L10n.back
+        config.imagePadding = 4
+        config.baseForegroundColor = AppColor.accent
+        let backButton = UIButton(configuration: config, primaryAction: UIAction { [weak self] _ in
+            self?.backTapped()
+        })
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
 
-    @objc private func saveTapped() {
-        presenter.didTapSave(title: addEditView.titleText, description: addEditView.descriptionText)
-    }
-
-    @objc private func cancelTapped() {
-        presenter.didTapCancel()
+    @objc private func backTapped() {
+        presenter.didTapBack(title: addEditView.titleText, description: addEditView.descriptionText)
     }
 }
 
