@@ -1,0 +1,25 @@
+//
+//  AddEditBuilder.swift
+//  ToDoList
+//
+//  Created by Кирилл Котыло on 1.03.26.
+//
+
+import UIKit
+import CoreData
+
+final class AddEditBuilder {
+
+    func build(container: NSPersistentContainer, task: TodoItem?) -> UIViewController {
+        let repository = CoreDataTaskRepository(container: container)
+        let interactor = AddEditInteractor(repository: repository)
+        let router = AddEditRouter()
+        let presenter = AddEditPresenter(interactor: interactor, router: router, task: task)
+        let viewController = AddEditViewController(presenter: presenter)
+        router.viewController = viewController
+        presenter.view = viewController
+        viewController.modalPresentationStyle = .pageSheet
+        let navigationController = UINavigationController(rootViewController: viewController)
+        return navigationController
+    }
+}

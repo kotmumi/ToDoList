@@ -33,6 +33,10 @@ final class ListViewController: UIViewController {
         super.viewDidLoad()
         setup()
         setupBindings()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         presenter.viewDidLoad()
     }
 }
