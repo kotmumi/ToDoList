@@ -20,4 +20,5 @@ enum L10n {
     static var edit: String { String(localized: "edit") }
     static var share: String { String(localized: "share") }
     static var delete: String { String(localized: "delete") }
+    static var ok: String { String(localized: "ok") }
 }

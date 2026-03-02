@@ -10,8 +10,10 @@ import UIKit
 final class AddEditRouter: AddEditRouting {
 
     weak var viewController: UIViewController?
+    var onPopCompletion: (() -> Void)?
 
     func pop() {
+        onPopCompletion?()
         viewController?.navigationController?.popViewController(animated: true)
     }
 }

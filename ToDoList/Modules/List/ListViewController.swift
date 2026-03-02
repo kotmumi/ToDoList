@@ -33,10 +33,6 @@ final class ListViewController: UIViewController {
         super.viewDidLoad()
         setup()
         setupBindings()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         presenter.viewDidLoad()
     }
 }
@@ -147,7 +143,7 @@ extension ListViewController: UITableViewDataSource {
 extension ListViewController: ListViewType {
     func showError(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
         present(alert, animated: true)
     }
 

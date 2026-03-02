@@ -18,8 +18,10 @@ final class ListBuilder {
         let viewController = ListViewController(presenter: presenter)
         router.viewController = viewController
         presenter.view = viewController
-        router.buildAddEdit = { task in
-            AddEditBuilder().build(container: container, task: task)
+        router.buildAddEdit = { [weak presenter] task in
+            AddEditBuilder().build(container: container, task: task) {
+                presenter?.viewDidLoad()
+            }
         }
         let navigationController = UINavigationController(rootViewController: viewController)
         return navigationController
