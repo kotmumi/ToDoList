@@ -46,11 +46,6 @@
 			path = ToDoList;
 			sourceTree = "<group>";
 		};
-		53F8BF332F50C5E0000A00C8 /* ToDoListTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ToDoListTests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +78,6 @@
 			isa = PBXGroup;
 			children = (
 				53F8BF162F50C5D7000A00C8 /* ToDoList */,
-				53F8BF332F50C5E0000A00C8 /* ToDoListTests */,
 				533DDAA62F56083F00C803A4 /* ToDoListTests */,
 				53F8BF152F50C5D7000A00C8 /* Products */,
 				533DD5E42F55F85100C803A4 /* Recovered References */,

@@ -26,9 +26,10 @@ final class AddEditPresenter {
         if let localizedError = error as? LocalizedError,
            let description = localizedError.errorDescription {
             return description
-        } else {
-            return L10n.errorUnknown
         }
+        
+        let description = error.localizedDescription.trimmingCharacters(in: .whitespacesAndNewlines)
+        return description.isEmpty ? L10n.errorUnknown : description
     }
 }
 
