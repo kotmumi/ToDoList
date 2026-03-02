@@ -21,6 +21,15 @@ final class AddEditPresenter {
         self.router = router
         self.task = task
     }
+    
+    private func userMessage(for error: Error) -> String {
+        if let localizedError = error as? LocalizedError,
+           let description = localizedError.errorDescription {
+            return description
+        } else {
+            return L10n.errorUnknown
+        }
+    }
 }
 
 extension AddEditPresenter: AddEditPresenting {
@@ -53,7 +62,7 @@ extension AddEditPresenter: AddEditPresenting {
                     case .success:
                         self?.router.pop()
                     case .failure(let error):
-                        self?.view?.showError(message: error.localizedDescription)
+                        self?.view?.showError(message: self?.userMessage(for: error) ?? L10n.errorUnknown)
                     }
                 }
             }
@@ -71,7 +80,7 @@ extension AddEditPresenter: AddEditPresenting {
                     case .success:
                         self?.router.pop()
                     case .failure(let error):
-                        self?.view?.showError(message: error.localizedDescription)
+                        self?.view?.showError(message: self?.userMessage(for: error) ?? L10n.errorUnknown)
                     }
                 }
             }

@@ -14,6 +14,26 @@ enum DummyJSONServiceError: Error {
     case networkError(Error)
 }
 
+extension DummyJSONServiceError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return L10n.errorNetwork
+        case .noData:
+            return L10n.errorNoData
+        case .decodingFailed:
+            return L10n.errorDecoding
+        case .networkError(let underlying):
+            if let urlError = underlying as? URLError,
+               urlError.code == .notConnectedToInternet {
+                return L10n.errorNoInternet
+            } else {
+                return L10n.errorNetwork
+            }
+        }
+    }
+}
+
 protocol TodosFetching: AnyObject {
     func fetchTodos(completion: @escaping (Result<[TodoItem], Error>) -> Void)
 }

@@ -21,4 +21,12 @@ enum L10n {
     static var share: String { String(localized: "share") }
     static var delete: String { String(localized: "delete") }
     static var ok: String { String(localized: "ok") }
+    
+    static var errorNoInternet: String { String(localized: "errorNoInternet") }
+    static var errorNetwork: String { String(localized: "errorNetwork") }
+    static var errorNoData: String { String(localized: "errorNoData") }
+    static var errorDecoding: String { String(localized: "errorDecoding") }
+    static var errorStorage: String { String(localized: "errorStorage") }
+    static var errorTaskNotFound: String { String(localized: "errorTaskNotFound") }
+    static var errorUnknown: String { String(localized: "errorUnknown") }
 }

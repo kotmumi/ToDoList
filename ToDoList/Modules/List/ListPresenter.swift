@@ -23,6 +23,15 @@ final class ListPresenter {
            self.interactor = interactor
            self.router = router
        }
+    
+    private func userMessage(for error: Error) -> String {
+        if let localizedError = error as? LocalizedError,
+           let description = localizedError.errorDescription {
+            return description
+        } else {
+            return L10n.errorUnknown
+        }
+    }
 }
 
 extension ListPresenter: ListPresenting {
@@ -44,7 +53,7 @@ extension ListPresenter: ListPresenting {
                 case .success(let tasks):
                     self?.tasksSubject.send(tasks)
                 case .failure(let error):
-                    self?.errorSubject.send(error.localizedDescription)
+                    self?.errorSubject.send(self?.userMessage(for: error) ?? L10n.errorUnknown)
                 }
             }
         }
@@ -67,7 +76,7 @@ extension ListPresenter: ListPresenting {
                     case .success(let tasks):
                         self?.tasksSubject.send(tasks)
                     case .failure(let error):
-                        self?.errorSubject.send(error.localizedDescription)
+                        self?.errorSubject.send(self?.userMessage(for: error) ?? L10n.errorUnknown)
                     }
                 }
             }
@@ -78,7 +87,7 @@ extension ListPresenter: ListPresenting {
                     case .success(let tasks):
                         self?.tasksSubject.send(tasks)
                     case .failure(let error):
-                        self?.errorSubject.send(error.localizedDescription)
+                        self?.errorSubject.send(self?.userMessage(for: error) ?? L10n.errorUnknown)
                     }
                 }
             }
@@ -99,7 +108,7 @@ extension ListPresenter: ListPresenting {
                         self.tasksSubject.send(tasks)
                     }
                 case .failure(let error):
-                    self?.errorSubject.send(error.localizedDescription)
+                    self?.errorSubject.send(self?.userMessage(for: error) ?? L10n.errorUnknown)
                 }
             }
         }
@@ -115,7 +124,7 @@ extension ListPresenter: ListPresenting {
                     tasks.removeAll { $0.id == task.id }
                     self.tasksSubject.send(tasks)
                 case .failure(let error):
-                    self?.errorSubject.send(error.localizedDescription)
+                    self?.errorSubject.send(self?.userMessage(for: error) ?? L10n.errorUnknown)
                 }
             }
         }

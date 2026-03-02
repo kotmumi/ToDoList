@@ -174,3 +174,12 @@ final class CoreDataTaskRepository: TaskRepository {
 enum CoreDataTaskRepositoryError: Error {
     case taskNotFound
 }
+
+extension CoreDataTaskRepositoryError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .taskNotFound:
+            return L10n.errorTaskNotFound
+        }
+    }
+}
