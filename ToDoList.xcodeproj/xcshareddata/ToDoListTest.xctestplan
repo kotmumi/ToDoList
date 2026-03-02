@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "A1B2C3D4-0000-4000-8000-000000000001",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "commandLineArgumentEntries" : [
+
+    ],
+    "environmentVariableEntries" : [
+
+    ],
+    "language" : "en",
+    "region" : "US"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ToDoList.xcodeproj",
+        "identifier" : "53F8BF382F50C5E0000A00C8",
+        "name" : "ToDoListTests"
+      }
+    }
+  ],
+  "version" : 1
+}
